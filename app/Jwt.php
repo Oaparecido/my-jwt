@@ -1,10 +1,14 @@
+#!/usr/bin/env php
 <?php
 
 class Jwt {
 
-    private $payload = [
-        'name' => 'Daniel Apº'
-    ];
+    private $payload = [];
+
+    public function __construct(array $payload)
+    {
+        $this->payload = $payload;
+    }
 
     public function randString()
     {
@@ -29,6 +33,3 @@ class Jwt {
         return $signature;
     }
 }
-
-$object = new Jwt();
-echo $object->sign();
