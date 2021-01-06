@@ -1,0 +1,9 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./.docker/Dockerfile
+    user: 1000:1000
+    volumes:
+      - .:/var/www/html
