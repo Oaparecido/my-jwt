@@ -1,9 +1,9 @@
 #!/usr/bin/env php
 <?php
 
-require "app/Jwt.php";
+require 'app/Jwt.php';
 
-$message = readline("Message: ");
+$message = readline('Message: ');
 
 $object = new Jwt([
     'message' => $message
@@ -11,11 +11,12 @@ $object = new Jwt([
 
 $encrypt = $object->sign();
 $verification = $object->validate($encrypt);
+$payload = $object->getPayload($encrypt);
 
-echo "|----------------------------|" . PHP_EOL;
-echo "|     --[(* My JWT *)]--     |" . PHP_EOL;
-echo "|----------------------------|" . PHP_EOL;
-echo "|                            |" . PHP_EOL;
+echo '|----------------------------|' . PHP_EOL;
+echo '|     --[(* My JWT *)]--     |' . PHP_EOL;
+echo '|----------------------------|' . PHP_EOL;
+echo '|                            |' . PHP_EOL;
 
 if ($verification['payload'])
     echo "| [✅] Payload: \e[92mVerified\e[0m     |" . PHP_EOL;
