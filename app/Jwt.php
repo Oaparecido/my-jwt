@@ -33,7 +33,7 @@ class Jwt {
         return $signature;
     }
 
-    public function validate(string $credentials)
+    public function validate(string $credentials): bool
     {
         $credentials = explode('.', $credentials);
 
@@ -41,12 +41,9 @@ class Jwt {
         $payload = json_decode(base64_decode($credentials[1]), true);
         $secret = base64_decode($credentials[2]);
 
-        $response = [
-            'header' => $header,
-            'payload'  => $payload,
-            'secret' => $secret
-        ];
+        if ($payload !== $this->payload)
+            return false;
 
-        return $response;
+        return true;
     }
 }

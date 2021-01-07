@@ -11,6 +11,8 @@ $object = new Jwt([
 
 $encrypt = $object->sign();
 
+echo "" . PHP_EOL;
 echo "Message encrypted:" . $encrypt . PHP_EOL;
 
-echo json_encode($object->validate($encrypt));
+if ($object->validate($encrypt))
+    echo "\e[92mVerified" . PHP_EOL;
