@@ -59,4 +59,11 @@ class Jwt {
 
         return $response;
     }
+
+    public function getPayload(string $credentials)
+    {
+        $credentials = explode('.', $credentials);
+
+        return json_decode(base64_decode($credentials[1]), true);
+    }
 }
