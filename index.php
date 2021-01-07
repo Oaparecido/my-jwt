@@ -33,5 +33,28 @@ if ($verification['secret'])
 else
     echo "| [🚨] Header:  \e[91mNot verified\e[0m |" . PHP_EOL;
 
-echo "|                            |" . PHP_EOL;
-echo "|----------------------------|" . PHP_EOL;
+echo '|                            |' . PHP_EOL;
+echo '|----------------------------|' . PHP_EOL . PHP_EOL;
+
+echo '|----------------------------|' . PHP_EOL;
+echo '|    --[(* Payload *)]--     |' . PHP_EOL;
+echo '|----------------------------|' . PHP_EOL;
+echo '|                            |' . PHP_EOL;
+
+foreach ($payload as $key => $value) {
+    if (strlen($value) >= 5)
+        $value_min = substr($value, 0, 4) . '...';
+
+    echo "| Key: -------- \e[36m['" . $key . "']\e[0m  |" . PHP_EOL;
+    echo "| Message: ---- \e[36m['" . $value_min . "']\e[0m  |" . PHP_EOL;
+
+}
+
+echo '|                            |' . PHP_EOL;
+echo '|----------------------------|' . PHP_EOL . PHP_EOL;
+
+$full_line = readline('  Full line ? (y/n) ');
+
+if ($full_line == 'y')
+    foreach ($payload as $value)
+        echo "  Message: \e[36m'" . $value . "'\e[0m  " . PHP_EOL;
