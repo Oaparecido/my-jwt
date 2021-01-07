@@ -5,9 +5,12 @@ require "app/Jwt.php";
 
 $message = readline("Message: ");
 
-
 $object = new Jwt([
     'message' => $message
 ]);
 
-echo $object->sign();
+$encrypt = $object->sign();
+
+echo "Message encrypted:" . $encrypt . PHP_EOL;
+
+echo json_encode($object->validate($encrypt));

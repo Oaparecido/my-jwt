@@ -32,4 +32,21 @@ class Jwt {
         $signature = str_replace('=', '', $signature);
         return $signature;
     }
+
+    public function validate(string $credentials)
+    {
+        $credentials = explode('.', $credentials);
+
+        $header = json_decode(base64_decode($credentials[0]), true);
+        $payload = json_decode(base64_decode($credentials[1]), true);
+        $secret = base64_decode($credentials[2]);
+
+        $response = [
+            'header' => $header,
+            'payload'  => $payload,
+            'secret' => $secret
+        ];
+
+        return $response;
+    }
 }
