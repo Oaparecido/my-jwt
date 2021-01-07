@@ -11,8 +11,15 @@ $object = new Jwt([
 
 $encrypt = $object->sign();
 
-echo "" . PHP_EOL;
-echo "Message encrypted:" . $encrypt . PHP_EOL;
+echo "|----------------------------|" . PHP_EOL;
+echo "|     --[(* My JWT *)]--     |" . PHP_EOL;
+echo "|----------------------------|" . PHP_EOL;
+echo "|                            |" . PHP_EOL;
 
 if ($object->validate($encrypt))
-    echo "\e[92mVerified" . PHP_EOL;
+    echo "| [✅] Payload: \e[92mVerified\e[0m     |" . PHP_EOL;
+
+echo "| [🚨] Header:  \e[91mNot verified\e[0m |" . PHP_EOL;
+echo "| [🚨] Secret:  \e[91mNot verified\e[0m |" . PHP_EOL;
+echo "|                            |" . PHP_EOL;
+echo "|----------------------------|" . PHP_EOL;
