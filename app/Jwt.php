@@ -4,10 +4,13 @@
 class Jwt {
 
     private $payload = [];
+    private $secret = '';
+    private $header = ['alg' => 'SHA256', 'typ' => 'JWT'];
 
     public function __construct(array $payload)
     {
         $this->payload = $payload;
+        $this->secret = $this->randString();
     }
 
     public function randString()
@@ -24,8 +27,8 @@ class Jwt {
 
     public function sign()
     {
-        $secret = $this->randString();
-        $header = base64_encode(json_encode(['alg' => 'SHA256', 'typ' => 'JWT']));
+        $secret = $this->secret;
+        $header = base64_encode(json_encode($this->header));
         $payload = base64_encode(json_encode($this->payload));
         $signature = $header . '.' . $payload . '.' . base64_encode($secret);
 
@@ -33,7 +36,7 @@ class Jwt {
         return $signature;
     }
 
-    public function validate(string $credentials): bool
+    public function validate(string $credentials): array
     {
         $credentials = explode('.', $credentials);
 
@@ -41,9 +44,19 @@ class Jwt {
         $payload = json_decode(base64_decode($credentials[1]), true);
         $secret = base64_decode($credentials[2]);
 
-        if ($payload !== $this->payload)
-            return false;
+        $response = [
+            'header' => true,
+            'payload' => true,
+            'secret' => true,
+        ];
 
-        return true;
+        if ($payload !== $this->payload)
+            $response['payload'] = false;
+        if ($secret !== $this->secret)
+            $response['secret'] = false;
+        if ($header !== $this->header)
+            $response['header'] = false;
+
+        return $response;
     }
 }
