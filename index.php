@@ -58,3 +58,17 @@ $full_line = readline('  Full line ? (y/n) ');
 if ($full_line == 'y')
     foreach ($payload as $value)
         echo "  Message: \e[36m'" . $value . "'\e[0m  " . PHP_EOL;
+
+echo PHP_EOL . PHP_EOL;
+echo '|----------------------------|' . PHP_EOL;
+echo '|  --[(* Expire Token *)]--  |' . PHP_EOL;
+echo '|----------------------------|' . PHP_EOL;
+echo '|                            |' . PHP_EOL;
+
+$count = 0;
+while ($count !== 3){
+    echo $object->refresh();
+    echo PHP_EOL;
+    $count++;
+}
+

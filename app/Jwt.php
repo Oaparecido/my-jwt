@@ -1,16 +1,17 @@
 #!/usr/bin/env php
 <?php
 
-class Jwt {
+class Jwt
+{
 
     private $payload = [];
+
     private $secret = '';
     private $header = ['alg' => 'SHA256', 'typ' => 'JWT'];
 
     public function __construct(array $payload)
     {
         $this->payload = $payload;
-        $this->secret = $this->randString();
     }
 
     public function randString()
@@ -27,12 +28,20 @@ class Jwt {
 
     public function sign()
     {
-        $secret = $this->secret;
+        $this->secret = $this->randString();
+
+        $this->payload = array_merge([
+            'exp' => (new DateTime("now"))->getTimestamp(),
+            'uid' => 1
+        ], $this->payload);
+
         $header = base64_encode(json_encode($this->header));
         $payload = base64_encode(json_encode($this->payload));
-        $signature = $header . '.' . $payload . '.' . base64_encode($secret);
+        $secret = hash_hmac('sha256', $header . '.'. $payload, $this->secret, true);
 
-        $signature = str_replace('=', '', $signature);
+        $signature = $header . '.' . $payload . '.' . base64_encode($secret);
+        $signature = preg_replace('/[^a-zA-Z0-9".]/', '', $signature);
+
         return $signature;
     }
 
@@ -66,4 +75,28 @@ class Jwt {
 
         return json_decode(base64_decode($credentials[1]), true);
     }
+
+    public function refresh()
+    {
+        $token = '';
+        for ($i = 0; $i < 3; $i++) {
+            sleep(1);
+            echo '  ' . ($i + 1) . '... ';
+
+            if ($i === 2) {
+                echo PHP_EOL;
+                echo "  \e[33mRefresh Token...\e[0m" . PHP_EOL;
+                sleep(2);
+                $token = $this->sign();
+            }
+        }
+        return $token;
+    }
+
+//    public function progressBar($done, $total, $info="", $width=50): string
+//    {
+//        $perc = round(($done * 100) / $total);
+//        $bar = round(($width * $perc) / 100);
+//        return sprintf("%s%%[%s>%s]%s\r", $perc, str_repeat("=", $bar), str_repeat(" ", $width-$bar), $info);
+//    }
 }
