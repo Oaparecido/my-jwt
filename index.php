@@ -14,7 +14,7 @@ $verification = $object->validate($encrypt);
 $payload = $object->getPayload($encrypt);
 
 echo '|----------------------------|' . PHP_EOL;
-echo '|     --[(* My JWT *)]--     |' . PHP_EOL;
+echo "|     \e[34m[--(* My JWT *)--]\e[0m     |" . PHP_EOL;
 echo '|----------------------------|' . PHP_EOL;
 echo '|                            |' . PHP_EOL;
 
@@ -34,41 +34,45 @@ else
     echo "| [🚨] Header:  \e[91mNot verified\e[0m |" . PHP_EOL;
 
 echo '|                            |' . PHP_EOL;
-echo '|----------------------------|' . PHP_EOL . PHP_EOL;
+echo '|----------------------------|' . PHP_EOL . PHP_EOL . PHP_EOL;
 
-echo '|----------------------------|' . PHP_EOL;
-echo '|    --[(* Payload *)]--     |' . PHP_EOL;
-echo '|----------------------------|' . PHP_EOL;
-echo '|                            |' . PHP_EOL;
+echo "  \e[34m[--(* Payload *)--]\e[0m" . PHP_EOL;
+echo PHP_EOL;
 
 foreach ($payload as $key => $value) {
     if (strlen($value) >= 5)
         $value_min = substr($value, 0, 4) . '...';
 
-    echo "| Key: -------- \e[36m['" . $key . "']\e[0m  |" . PHP_EOL;
-    echo "| Message: ---- \e[36m['" . $value_min . "']\e[0m  |" . PHP_EOL;
+    echo "  [O] Key: -------- \e[36m['" . $key . "']\e[0m  " . PHP_EOL;
+    echo "  [O] Message: ---- \e[36m['" . $value_min . "']\e[0m  " . PHP_EOL;
 
 }
 
-echo '|                            |' . PHP_EOL;
-echo '|----------------------------|' . PHP_EOL . PHP_EOL;
-
-$full_line = readline('  Full line ? (y/n) ');
-
+echo PHP_EOL;
+$full_line = readline('  Show complete message!? (y/n) ');
+echo PHP_EOL;
 if ($full_line == 'y')
     foreach ($payload as $value)
-        echo "  Message: \e[36m'" . $value . "'\e[0m  " . PHP_EOL;
+        echo "  [O] Message: \e[36m'" . $value . "'\e[0m  " . PHP_EOL;
 
 echo PHP_EOL . PHP_EOL;
-echo '|----------------------------|' . PHP_EOL;
-echo '|  --[(* Expire Token *)]--  |' . PHP_EOL;
-echo '|----------------------------|' . PHP_EOL;
-echo '|                            |' . PHP_EOL;
+echo "  \e[34m[--(* Expire Token *)--]\e[0m" . PHP_EOL;
 
 $count = 0;
 while ($count !== 3){
-    echo $object->refresh();
-    echo PHP_EOL;
+    $token = $object->refresh();
+
+    sleep(1);
+    echo '  ' . ($count + 1) . '... ';
+
+
+    if ($count === 2) {
+        echo PHP_EOL;
+        echo "  \e[33mRefresh Token...\e[0m" . PHP_EOL;
+        sleep(2);
+
+        $object->verifyToken($token, );
+    }
     $count++;
 }
 
