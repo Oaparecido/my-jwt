@@ -7,7 +7,7 @@ class Jwt
     private $payload = [];
 
     private $secret = '';
-    private $header = ['alg' => 'SHA256', 'typ' => 'JWT'];
+    private $header = ['alg' => 'HS256', 'typ' => 'JWT'];
 
     public function __construct(array $payload)
     {
@@ -31,15 +31,13 @@ class Jwt
         $this->secret = $this->randString();
 
         $this->payload = array_merge([
-            'exp' => (new DateTime("now"))->getTimestamp(),
-            'uid' => 1
+            'refresh_token' => $this->randString(),
         ], $this->payload);
 
         $header = base64_encode(json_encode($this->header));
         $payload = base64_encode(json_encode($this->payload));
-        $secret = hash_hmac('sha256', $header . '.'. $payload, $this->secret, true);
 
-        $signature = $header . '.' . $payload . '.' . base64_encode($secret);
+        $signature = $header . '.' . $payload . '.' . base64_encode($this->secret);
         $signature = preg_replace('/[^a-zA-Z0-9".]/', '', $signature);
 
         return $signature;
@@ -79,18 +77,15 @@ class Jwt
     public function refresh()
     {
         $token = '';
-        for ($i = 0; $i < 3; $i++) {
-            sleep(1);
-            echo '  ' . ($i + 1) . '... ';
+        $this->payload['refresh_token'] = $this->randString();
+        $token = $this->sign();
 
-            if ($i === 2) {
-                echo PHP_EOL;
-                echo "  \e[33mRefresh Token...\e[0m" . PHP_EOL;
-                sleep(2);
-                $token = $this->sign();
-            }
-        }
         return $token;
+    }
+
+    private function verifyToken(string $new_token, string $token):boolean
+    {
+        return true;
     }
 
 //    public function progressBar($done, $total, $info="", $width=50): string
