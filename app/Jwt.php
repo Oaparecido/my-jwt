@@ -83,8 +83,10 @@ class Jwt
         return $token;
     }
 
-    private function verifyToken(string $new_token, string $token):boolean
+    public function verifyToken(string $new_token, string $token): bool
     {
+        if ($new_token === $token)
+            return false;
         return true;
     }
 
