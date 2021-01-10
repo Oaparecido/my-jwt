@@ -40,8 +40,8 @@ echo "  \e[34m[--(* Payload *)--]\e[0m" . PHP_EOL;
 echo PHP_EOL;
 
 foreach ($payload as $key => $value) {
-    if (strlen($value) >= 5)
-        $value_min = substr($value, 0, 4) . '...';
+    if (strlen($value) >= 10)
+        $value_min = substr($value, 0, 10) . '...';
 
     echo "  [O] Key: -------- \e[36m['" . $key . "']\e[0m  " . PHP_EOL;
     echo "  [O] Message: ---- \e[36m['" . $value_min . "']\e[0m  " . PHP_EOL;
