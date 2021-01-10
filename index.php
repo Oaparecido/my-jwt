@@ -59,20 +59,23 @@ echo PHP_EOL . PHP_EOL;
 echo "  \e[34m[--(* Expire Token *)--]\e[0m" . PHP_EOL;
 
 $count = 0;
-while ($count !== 3){
+while ($count !== 6){
     $token = $object->refresh();
 
     sleep(1);
-    echo '  ' . ($count + 1) . '... ';
 
-
-    if ($count === 2) {
+    if ($count % 2 === 0) {
         echo PHP_EOL;
         echo "  \e[33mRefresh Token...\e[0m" . PHP_EOL;
         sleep(2);
 
-        $object->verifyToken($token, );
+        $change = $object->verifyToken($token, $encrypt);
+
+        if ($change) {
+            echo "  [✅] Token modified!" . PHP_EOL;
+        }
     }
+
     $count++;
 }
 
