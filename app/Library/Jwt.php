@@ -1,9 +1,9 @@
-#!/usr/bin/env php
 <?php
+
+namespace App\Library;
 
 class Jwt
 {
-
     private $payload = [];
 
     private $secret = '';

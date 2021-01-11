@@ -1,7 +1,9 @@
 #!/usr/bin/env php
 <?php
 
-require 'app/Jwt.php';
+require_once 'vendor/autoload.php';
+
+use App\Lib\Jwt;
 
 $message = readline('Message: ');
 
