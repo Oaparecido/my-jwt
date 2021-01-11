@@ -3,7 +3,7 @@
 
 require_once 'vendor/autoload.php';
 
-use App\Lib\Jwt;
+use App\Library\Jwt;
 
 $message = readline('Message: ');
 
