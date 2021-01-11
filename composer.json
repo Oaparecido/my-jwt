@@ -1,0 +1,17 @@
+{
+    "name": "aparecido/myjwt",
+    "description": "Project to implemnt JWT from scratch",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Daniel Aparecido",
+            "email": "daniel.aparecido4683@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "require": {}
+}
