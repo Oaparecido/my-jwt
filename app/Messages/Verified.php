@@ -8,9 +8,9 @@ class Verified
 {
     private $verification;
 
-    public function __construct(string $encrypt, Jwt $jwt)
+    public function __construct(array $verification)
     {
-        $this->verification = $jwt->validate($encrypt);
+        $this->verification = $verification;
     }
 
     public function getMessage()
@@ -37,14 +37,6 @@ class Verified
             echo "| [🚨] Header:  \e[91mNot verified\e[0m |" . PHP_EOL;
 
         echo '|                            |' . PHP_EOL;
-        echo '|----------------------------|' . PHP_EOL . PHP_EOL . PHP_EOL;
-    }
-
-    /**
-     * @return string|string[]|null
-     */
-    public function getEncrypt()
-    {
-        return $this->encrypt;
+        echo '|----------------------------|' . PHP_EOL . PHP_EOL;
     }
 }
