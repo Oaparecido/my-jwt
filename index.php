@@ -3,7 +3,9 @@
 
 require_once 'vendor/autoload.php';
 
-use App\Library\Jwt;
+use App\Lib\Jwt;
+use App\Messages\Payload;
+use App\Messages\Verified;
 
 $message = readline('Message: ');
 
@@ -12,31 +14,16 @@ $object = new Jwt([
 ]);
 
 $encrypt = $object->sign();
-$verification = $object->validate($encrypt);
-$payload = $object->getPayload($encrypt);
 
-echo '|----------------------------|' . PHP_EOL;
-echo "|     \e[34m[--(* My JWT *)--]\e[0m     |" . PHP_EOL;
-echo '|----------------------------|' . PHP_EOL;
-echo '|                            |' . PHP_EOL;
-
-if ($verification['payload'])
-    echo "| [✅] Payload: \e[92mVerified\e[0m     |" . PHP_EOL;
-else
-    echo "| [🚨] Payload: \e[91mNot verified\e[0m |" . PHP_EOL;
-
-if ($verification['secret'])
-    echo "| [✅] Secret:  \e[92mVerified\e[0m     |" . PHP_EOL;
-else
-    echo "| [🚨] Secret:  \e[91mNot verified\e[0m |" . PHP_EOL;
-
-if ($verification['secret'])
-    echo "| [✅] Header:  \e[92mVerified\e[0m     |" . PHP_EOL;
-else
-    echo "| [🚨] Header:  \e[91mNot verified\e[0m |" . PHP_EOL;
-
-echo '|                            |' . PHP_EOL;
-echo '|----------------------------|' . PHP_EOL . PHP_EOL . PHP_EOL;
+$verified = new Verified($encrypt, (new Jwt()));
+$verified->getMessage();
+die();
+$payload = new Payload($object);
+$payload->getMessage();
+//$encrypt = $object->sign();
+//$verification = $object->validate($encrypt);
+//$payload = $object->getPayload($encrypt);
+die();
 
 echo "  \e[34m[--(* Payload *)--]\e[0m" . PHP_EOL;
 echo PHP_EOL;
