@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Library;
+namespace App\Lib;
 
 class Jwt
 {
@@ -9,7 +9,7 @@ class Jwt
     private $secret = '';
     private $header = ['alg' => 'HS256', 'typ' => 'JWT'];
 
-    public function __construct(array $payload)
+    public function __construct(array $payload = [])
     {
         $this->payload = $payload;
     }
@@ -50,6 +50,8 @@ class Jwt
         $header = json_decode(base64_decode($credentials[0]), true);
         $payload = json_decode(base64_decode($credentials[1]), true);
         $secret = base64_decode($credentials[2]);
+
+        var_dump($payload, $this->payload);
 
         $response = [
             'header' => true,
