@@ -13,5 +13,7 @@
             "App\\": "app/"
         }
     },
-    "require": {}
+    "require": {
+        "ext-readline": "*"
+    }
 }
