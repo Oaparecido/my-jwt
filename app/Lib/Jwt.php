@@ -51,8 +51,6 @@ class Jwt
         $payload = json_decode(base64_decode($credentials[1]), true);
         $secret = base64_decode($credentials[2]);
 
-        var_dump($payload, $this->payload);
-
         $response = [
             'header' => true,
             'payload' => true,
