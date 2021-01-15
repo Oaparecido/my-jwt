@@ -4,6 +4,7 @@
 require_once 'vendor/autoload.php';
 
 use App\Lib\Jwt;
+use App\Messages\Expire;
 use App\Messages\Payload;
 use App\Messages\Verified;
 
@@ -19,6 +20,7 @@ $payload_credential = $object->getPayload($encrypt);
 
 $verified = new Verified($verification);
 $payload = new Payload($payload_credential);
+$expire = new Expire();
 
 $verified->getMessage();
 $payload->getMessage();
@@ -31,19 +33,7 @@ $count = 0;
 while ($count !== 6){
     $token = $object->refresh();
 
-    sleep(1);
-
-    if ($count % 2 === 0) {
-        echo PHP_EOL;
-        echo "  \e[33mRefresh Token...\e[0m" . PHP_EOL;
-        sleep(2);
-
-        $change = $object->verifyToken($token, $encrypt);
-
-        if ($change) {
-            echo "  [✅] Token modified!" . PHP_EOL;
-        }
-    }
+    $expire->getMessage($count, $token, $encrypt);
 
     $count++;
 }
