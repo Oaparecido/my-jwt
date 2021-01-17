@@ -25,12 +25,11 @@ $expire = new Expire();
 $verified->getMessage();
 $payload->getMessage();
 $payload->getCompleteMessage();
-die();
 
 echo "  \e[34m[--(* Expire Token *)--]\e[0m" . PHP_EOL;
 
 $count = 0;
-while ($count !== 6){
+while ($count !== 6)  {
     $token = $object->refresh();
 
     $expire->getMessage($count, $token, $encrypt);
