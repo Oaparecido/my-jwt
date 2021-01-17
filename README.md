@@ -39,5 +39,15 @@ It works in 3 parts, **Header**, **Payload** and **Signature**
 
   Signature is the junction of **all hashes**, plus a **secret**, which is a **unique** key encrypted by the **system**.
 
+### 🚀 Installation 🚀
+📌 It's very simple you just need to have the **docker** and **docker-compose** installed.<br/>
+With that installed just run the following command.
 
+```shell
+ $ docker-compose up -d
+```
+```shell
+ $ docker-compose exec app ./index.php
+```
+**🔥 It's very simple**
 ## 🍻 Thanks for read! 🍻
